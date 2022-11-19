@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khw.portfolio.gallery.GalleryMapper">
+
+	<!-- 게시물 저장 -->	
+	<insert id="write" parameterType="kr.co.khw.portfolio.gallery.GalleryVO" >
+		insert into gallery (title, content,  regdate,  memberno)
+		values (#{title}, #{content},  now(), #{memberno})
+		<selectKey resultType="int" keyProperty="no" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<!-- 게시물 리스트 -->
+	<select id="list" resultType="kr.co.khw.portfolio.gallery.GalleryVO">
+		select * from gallery g join image i on (i.boardno=g.no and type='gallery')
+		<where>
+			<if test="no !=0">
+				g.no=#{no} and
+			</if>
+			g.delete_status !=1
+		</where>
+	</select>
+	
+	<!-- 이미지 저장 -->
+	<insert id="imginsert" parameterType="kr.co.khw.image.ImageVO">
+		insert into image (boardno, filename_org, filename_real, order_num, type)
+		values (#{boardno}, #{filename_org}, #{filename_real}, #{order_num}, #{type} )
+	</insert>
+	
+	<!-- 갤러리 삭제 -->
+	<update id="delete" parameterType="kr.co.khw.portfolio.gallery.GalleryVO">
+		update gallery set delete_status =1 where no = #{no}
+	</update>
+</mapper>

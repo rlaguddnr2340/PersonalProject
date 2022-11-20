@@ -19,6 +19,13 @@
 		LIMIT #{startIdx} , #{pageRow}
 	</select>
 	
+	<!-- 메인페이지 목록 가져오기(조회수순) -->
+	<select id="qnalist"  resultType="kr.co.khw.portfolio.reply.ReplyVO">
+		select * from reply where delete_status !=1 order by viewcount desc
+		LIMIT 0 , 5;
+	</select>
+	
+	
 	<!-- 총 개수 구하기 -->
 	<select id="totalcount" parameterType="util.PageInfo" resultType="int">
 		select count(*) from reply

@@ -24,11 +24,13 @@ function goSave() {
 	} else {
 		oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 	}
-	if($("#profileImage").val()=='' || $("#contentImage").val() =='' ){
-		alert('첨부파일은 필수입니다.');
-		return false;
+	
+	if($('input[name="profile_chk"]').is(":checked")){
+		console.log($("#profile_chk").val());
 	}
-
+	if($('input[name="contentfile_chk"]').is(":checked")){
+		console.log($("#contentfile_chk").val());
+	}
 	$('#frm').submit();
 }
 </script>
@@ -36,12 +38,12 @@ function goSave() {
 <body>
 <div id="boardWrap" class="bbs">
 	<div class="pageTitle">
-		<h2>공지사항</h2>
+		<h2>책소개</h2>
 	</div>
 	<!--//pageTitle-->
 	<!--//search-->
 	<div class="write">
-		<form name="frm" id="frm" action="/pp/portfolio/gallery/writeproc.do" method="POST" enctype="multipart/form-data">
+		<form name="frm" id="frm" action="/pp/portfolio/gallery/editproc.do" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="cmd" value="write">
 		<input type="hidden" name="writer" value="${loginInfo.id }">
 		<table>
@@ -53,25 +55,33 @@ function goSave() {
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" id="title" name="title" value="" />
+						<input type="text" id="title" name="title" value="${data[0].title}" />
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea id="contents" name="content" rows="25"></textarea>
+						<textarea id="contents" name="content" rows="25">${data[0].content}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<th>프로필 이미지</th>
 					<td>
-						<input id ="profileImage" type="file" name="filename"  required>
+						<p>기존파일 : ${data[0].filename_org }<br>
+								<input type="checkbox" id="profile_chk" name="profile_chk" value="1" title="첨부파일을 삭제하시려면 체크해주세요" />
+								<label for="profile_chk">기존파일삭제</label>
+							</p>
+						<input type="file" name="filename">
 					</td>
 				</tr>
 				<tr>
 					<th>내용 이미지</th>
 					<td>
-						<input id ="contentImage" type="file" name="filename"  required>
+						<p>기존파일 : ${data[1].filename_org }<br>
+								<input type="checkbox" id="contentfile_chk" name="contentfile_chk" value="1" title="첨부파일을 삭제하시려면 체크해주세요" />
+								<label for="contentfile_chk">기존파일삭제</label>
+							</p>
+						<input type="file" name="filename" >
 					</td>
 				</tr>
 			</tbody>

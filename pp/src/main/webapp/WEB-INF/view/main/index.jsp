@@ -4,6 +4,8 @@
 <head>
 <title><%=util.Property.title%></title>      
 <%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script>
 $(document).ready(function(){
 	$(".trade_type").each(function(idx, item) {
@@ -58,12 +60,12 @@ function selectPort(source, target, sel) {
 }
 
 function changeTab(v) {
-	$("#curbl_notice").removeClass("on");
-	$("#curbl_qna").removeClass("on");
+	$("#curbl_free").removeClass("on");
+	$("#curbl_member").removeClass("on");
 	$("#curbl_"+v).addClass("on");
 	
-	$("#notice_tab").hide();
-	$("#qna_tab").hide();
+	$("#free_tab").hide();
+	$("#member_tab").hide();
 	$("#"+v+"_tab").show();
 }
 
@@ -130,22 +132,24 @@ function goContainer() {
 						<h2>공지사항</h2>
 						<ul>
 							<li style="text-align:center;">등록된 공지사항이 없습니다.</li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board1', '공지사항', '/board/notice/view.do?idx=');">AAA <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board1', '공지사항', '/board/notice/view.do?idx=');">AAA <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board1', '공지사항', '/board/notice/view.do?idx=');">AAA <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board1', '공지사항', '/board/notice/view.do?idx=');">AAA <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board1', '공지사항', '/board/notice/view.do?idx=');">AAA <span>2020-01-01</span></a></li>
+							<li><a href="javascript:;" onclick="parent.clickMenu('portfolio1', '공지사항', '/board/notice/view.do?idx=');">
+								제목<span>조회수</span></a></li>
 						</ul>
 					</div>
 					<div class="box notice">
-						<h2>Q&A</h2>
+						<h2>Q&A(인기글)</h2>
 						<ul>
-							<li style="text-align:center;">등록된 Q&A가 없습니다.</li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board2', 'Q&A', '/board/qna/view.do?idx=');">BBB <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board2', 'Q&A', '/board/qna/view.do?idx=');">BBB <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board2', 'Q&A', '/board/qna/view.do?idx=');">BBB <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board2', 'Q&A', '/board/qna/view.do?idx=');">BBB <span>2020-01-01</span></a></li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('board2', 'Q&A', '/board/qna/view.do?idx=');">BBB <span>2020-01-01</span></a></li>
+							<c:if test="${empty qnalist }">
+								<li style="text-align:center;">등록된 Q&A가 없습니다.</li>							
+							</c:if>
+							<c:if test="${!empty qnalist }">
+								<c:forEach items="${qnalist}" var="list">
+								 	<li>
+								 		<a href="javascript:;" onclick="parent.clickMenu('portfolio4', 'Q&A(인기글)', '/portfolio/reply/view.do?no=${list.no}');">${list.title } <span>${list.regdate}</span>
+								 		</a>
+								 	</li>
+								</c:forEach>
+							</c:if>
 						</ul>
 					</div>
 					<div class="linkBox">
@@ -158,127 +162,109 @@ function goContainer() {
 				</div>
 				<div class="wid48 fl_r">
 					<div class="box bl">
-						<h2>회원관리</h2>
+						<h2>책소개</h2>
 						<table>
 							<thead>
 								<tr>
+								<c:if test="${empty booklist }">
+									<li style="text-align:center;">등록된 책 정보가 없습니다.</li>							
+								</c:if>
+								<c:if test="${!empty booklist }">
 									<th>ID</th>
-									<th>이름</th>
-									<th>연락처</th>
-									<th>가입일</th>
+									<th>책이름</th>
+									<th>책내용</th>
+									<th>작성일</th>
+								</c:if>
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${booklist }" var="list">
 								<tr>
-									<td>test</td>
-									<td><a href="">홍길동</a></td>
-									<td>010-1234-5678</td>
-									<td>2020-01-01</td>
+									<td>${list.writer }</td>
+									<td>
+										<c:choose>
+								           <c:when test="${fn:length(list.title) > 14}">
+								           		<c:out value="${fn:substring(list.title,0,13)}"/>...
+								           </c:when>
+								           <c:otherwise>
+								           		<c:out value="${list.title}"/>
+								           </c:otherwise> 
+							         	</c:choose>
+						         	</td>
+									<td>
+										<a href="javascript:;" onclick="parent.clickMenu('portfolio2', '책소개', '/portfolio/gallery/index.do?no=${list.no}');">
+											<c:choose>
+									           <c:when test="${fn:length(list.content) > 14}">
+									           		<c:out value="${fn:substring(list.content,333,340)}"/>...
+									           </c:when>
+									           <c:otherwise>
+									           		<c:out value="${list.content}"/>
+									           </c:otherwise> 
+							         		</c:choose>
+										</a>
+									</td>
+									<td>
+										${fn:substring(list.regdate,0,10) } 
+									</td>
 								</tr>
-								<tr>
-									<td>test</td>
-									<td><a href="">홍길동</a></td>
-									<td>010-1234-5678</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td>test</td>
-									<td><a href="">홍길동</a></td>
-									<td>010-1234-5678</td>
-									<td>2020-01-01</td>
-								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
 					</div>
 					<!--//바로가기-->
 					<div class="box bl">
-						<h2>최근 게시글</h2>
+						<h2>자유 게시판 / 3일 이내 가입자</h2>
 						<div class="blTab">
 							<ul>
-								<li id="curbl_notice" class="on" onclick="changeTab('notice');">공지</li>
-								<li id="curbl_qna" onclick="changeTab('qna');">Q&A</li>
+								<li id="curbl_free" class="on" onclick="changeTab('free');">자유</li>
+								<li id="curbl_member" onclick="changeTab('member');">회원</li>
 							</ul>
 						</div>
-						<table id="notice_tab">
+						<table id="free_tab">
 							<thead>
 								<tr>
+								<c:if test="${empty freelist }">
+									<li style="text-align:center;">등록된 글이 없습니다.</li>							
+								</c:if>
+								<c:if test="${!empty freelist }">
 									<th>제목</th>
 									<th>작성자</th>
 									<th>작성일</th>
+								</c:if>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">공지사항입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
+								<c:forEach items="${freelist.content }" var="list" >
+									<tr>
+										<td><a href="" onclick="parent.clickMenu('portfolio5', '자유게시판', '/portfolio/comment/view.do?boardno=${list.boardno}');">${list.title }</a></td>
+										<td>${list.writer}</td>
+										<td>${list.regdate}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
-						<table id="qna_tab" style="display:none;">
+						
+						<table id="member_tab" style="display:none;">
 							<thead>
-								<tr>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>작성일</th>
-								</tr>
+								<c:if test="${empty memberlist }">
+									<li style="text-align:center;">3일 이내 가입한 회원이 없습니다.</li>							
+								</c:if>
+								<c:if test="${!empty memberlist }">
+									<tr>
+										<th>ID</th>
+										<th>이름</th>
+										<th>가입일</th>
+									</tr>
+								</c:if>
 							</thead>
 							<tbody>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
-								<tr>
-									<td><a href="">Q&A입니다.</a></td>
-									<td>홍길동</td>
-									<td>2020-01-01</td>
-								</tr>
+								<c:forEach items="${memberlist}" var="list">
+									<tr>
+										<td><a href="javascript:;" onclick="parent.clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do?');">${list.id}</a></td>
+										<td>${list.name }</td>
+										<td>${list.regdate }</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

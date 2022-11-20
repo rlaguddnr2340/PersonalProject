@@ -80,6 +80,18 @@ public class GalleryController {
 		return service.delete(vo);
 	}
 	
+	//갤러리 수정 폼
+	@GetMapping("portfolio/gallery/edit.do")
+	public String edit(GalleryVO vo, Model model) {
+		model.addAttribute("data", service.list(vo));
+		return "/portfolio/gallery/edit";
+	}
 	
+	//갤러리 수정 처리
+		@PostMapping("portfolio/gallery/editproc.do")
+		public String editproc(GalleryVO vo, Model model) {
+			model.addAttribute("data", service.list(vo));
+			return "/portfolio/gallery/index";
+		}
 
 }

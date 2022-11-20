@@ -9,109 +9,122 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <script src="<%=util.Property.contextPath%>/js/imagesloaded.pkgd.js"></script>
 <script>
-        //폴다운 메뉴
-        $(function(){
-            $('.outer-menu').hover(function(){
-                $(this).find('.inner-menu').css('display','block');
-            },function(){
-                $(this).find('.inner-menu').css('display','none');
-            });
-        })
+ //폴다운 메뉴
+ $(function(){
+     $('.outer-menu').hover(function(){
+         $(this).find('.inner-menu').css('display','block');
+     },function(){
+         $(this).find('.inner-menu').css('display','none');
+     });
+ })
 
-        //페이지
-        $(function(){
-            $('#main-section').imagesLoaded(function(){
-                $('#main-section').masonry({
-                    itemSelector:'.paper',
-                    columnWidth:230,
-                    isAnimated: true
-                }); 
-            });
-        })
-        
-        function deleteimg(no){
-        	if (confirm("정말 삭제하시겠습니까??")){
-        		$.ajax({
-        			url : "/pp/portfolio/gallery/delete.do",
-        			data : {"no" : no},
-        			type : 'post',
-        			success :function(res){
-        				console.log(res)
-        				if(res==1){
-        					alert("삭제완료");
-        					  location.href = "/pp/portfolio/gallery/index.do";
-        				}else{
-        					alert("삭제실패");
-        				}
-        			}
-        		})
-        		console.log(no);
-        		
-        	}else{
-        		return false;
-        	}
-        }
-        
+ //페이지
+ $(function(){
+     $('#main-section').imagesLoaded(function(){
+         $('#main-section').masonry({
+             itemSelector:'.paper',
+             columnWidth:230,
+             isAnimated: true
+         }); 
+     });
+ })
+ 
+ $(function(){
+	 if(${param.no != null}){
+		 showLightbox(${param.no});
+	 }
+ })
+ 
+ //삭제
+ function deleteimg(no){
+ 	if (confirm("정말 삭제하시겠습니까??")){
+ 		$.ajax({
+ 			url : "/pp/portfolio/gallery/delete.do",
+ 			data : {"no" : no},
+ 			type : 'post',
+ 			success :function(res){
+ 				console.log(res)
+ 				if(res==1){
+ 					alert("삭제완료");
+ 					  location.href = "/pp/portfolio/gallery/index.do";
+ 				}else{
+ 					alert("삭제실패");
+ 				}
+ 			}
+ 		})
+ 		console.log(no);
+ 		
+ 	}else{
+ 		return false;
+ 	}
+ }
+ //수정
+ function editimg(no){
+ 	if (confirm("수정하시겠습니까??")){
+ 		location.href="/pp/portfolio/gallery/edit.do?no="+no;
+ 	}
+ }
 
-        function showLightbox(no){	
-        	if(${logininfo.name !=null}){
-        		
-        	
-	       	 $.ajax({
-	       		url :'/pp/portfolio/gallery/view.do',
-	       		type : 'post',
-	       		data : {
-	       			no:no
-	       		},
-	       		datatype : 'json',
-	       		
-	       		success:function(res){
-	       			var profileImage="";
-	       			var contentImage="";
-	       			$.each(res, function(i, e){
-	       				if(e["order_num"]==0){
-	       					profileImage = e["filename_real"];
-	       				}else{
-	       					contentImage = e["filename_real"];
-	       				}
-	       			})
-	       			$(".lightbox-img").attr({"src":'/pp/upload/'+contentImage,"style": "width:600px;"});
-	       			$(".user-information-image img").attr({"src":'/pp/upload/'+profileImage,"style": "width:40px; height:70px"});
-	       			var str ="";
-	                str+="<h3>"+res[0].title+"</h3>";
-	                str+="<p>"+res[0].content+"<p>"
-	       			$(".user-information-text").html(str);
-	                var str2 ="";
-	                str2+="<button style='float: right; border : solid; color: red' onclick='deleteimg(" +res[0].no+");' >삭제</button>";
-	                $("#button-area").html(str2);
-	                $('#darken-background').show();
-				    $('#darken-background').css('top',$(window).scrollTop());
-				    $('body').css('overflow','hidden');            			
-	       		}
-	       	 });
-        	}else{
-        		alert("로그인후 이용 가능합니다.")
-        	}
-        	
-       } 
-        //라이트 박스 구성
-        $(function(){
-            function hideLightbox(){
-                $('#darken-background').hide();
-                $('body').css('overflow','');
-            }
-        
-            $('#darken-background').click(function(){
-                hideLightbox();
-            });
+ function showLightbox(no){	
+ 	if(${logininfo.name !=null}){
+ 	 $.ajax({
+ 		url :'/pp/portfolio/gallery/view.do',
+ 		type : 'post',
+ 		data : {
+ 			no:no
+ 		},
+ 		datatype : 'json',
+ 		success:function(res){
+ 			console.log(res);
+ 			var profileImage="";
+ 			var contentImage="";
+ 			$.each(res, function(i, e){
+ 				if(e["order_num"]==0){
+ 					profileImage = e["filename_org"];
+ 				}else{
+ 					contentImage = e["filename_org"];
+ 				}
+ 			})
+ 			$(".lightbox-img").attr({"src":'/pp/upload/'+contentImage,"style": "width:600px;"});
+ 			$(".user-information-image img").attr({"src":'/pp/upload/'+profileImage,"style": "width:40px; height:70px"});
+ 			var str ="";
+          str+="<h3>"+res[0].title+"</h3>";
+          str+="<p>"+res[0].content+"<p>"
+ 			$(".user-information-text").html(str);
+          var str2 ="";
+          if(res[0].writer=="${loginInfo.id}" || "${loginInfo.authority}" =="ROLE_ADMIN"){
+           str2+="<button style='float: right; border : solid; color: red' onclick='deleteimg(" +res[0].no+");' >삭제</button>";	                	
+           str2+="<button style='float: right; border : solid; color: blue' onclick='editimg(" +res[0].no+");' >수정</button>";	                	
+          }
+          $("#button-area").html(str2);
+          $('#darken-background').show();
+ $('#darken-background').css('top',$(window).scrollTop());
+ $('body').css('overflow','hidden');            			
+ 		}
+ 	 });
+ 	}else{
+ 		alert("로그인후 이용 가능합니다.")
+ 	}
+ 	
+} 
+ //라이트 박스 구성
+ $(function(){
+     function hideLightbox(){
+         $('#darken-background').hide();
+         $('body').css('overflow','');
+     }
+ 
+     $('#darken-background').click(function(){
+         hideLightbox();
+     });
 
-            //$('.paper').click(function(){ showLightbox();});
+     //$('.paper').click(function(){ showLightbox();});
 
-            $('#lightbox').click(function(event){
-                event.stopPropagation();
-            });
-        });
-    </script>
+     $('#lightbox').click(function(event){
+         event.stopPropagation();
+     });
+ });
+</script>
     
      <!-- 초기화하기 -->
      <style>
@@ -354,7 +367,7 @@
 	    		<div class="paper" onclick="showLightbox(${list.no});">
 		            <div class="paper-holder">
 		            	<% double random = Math.floor(Math.random()*150)+30; %>
-		                <a><img width="<%=random %>" src="/pp/upload/${list.filename_real }"></a>
+		                <a><img width="<%=random %>" src="/pp/upload/${list.filename_org }"></a>
 		            </div>
 		            <p class="paper-description">${list.title}</p>
 		            

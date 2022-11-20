@@ -14,5 +14,5 @@ public class GalleryVO {
 	private int delete_status;
 	private int order_num;
 	private String type;
-	private int memberno;
+	private String writer;
 }

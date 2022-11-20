@@ -22,6 +22,10 @@ public interface ReplyMapper {
 	public int delete(ReplyVO vo);
 	public int deleteimage(ReplyVO vo);
 	
+	//메인페이지 목록 가져오기(조회수순)
+	public List<ReplyVO> qnalist();
+	
+	
 	public int updategno(ReplyVO vo);
 	public int updateono(ReplyVO vo);
 	public int reviesono(ReplyVO vo);

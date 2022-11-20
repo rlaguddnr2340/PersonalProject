@@ -14,6 +14,7 @@ public interface CommentBoardRepository extends JpaRepository<CommentBoard, Inte
 	Page<CommentBoard> findAllByTitleContainsOrContentContains(String title,String content,Pageable pageable);
 	Page<CommentBoard> findAllByTitleContains(String title,Pageable pageable);
 	Page<CommentBoard> findAllByContentContains(String content,Pageable pageable);
+	Page<CommentBoard> findAll(Pageable pageable);
 
 	
 }

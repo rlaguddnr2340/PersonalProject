@@ -13,4 +13,7 @@ public interface GalleryMapper {
 	public List<GalleryVO> list(GalleryVO vo);
 	public int imginsert(ImageVO vo);
 	public int delete(GalleryVO vo);
+	
+	//메인페이지 리스트
+	public List<GalleryVO> gallerylist();
 }

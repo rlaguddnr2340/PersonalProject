@@ -51,7 +51,7 @@
 					<!-- 계산식 = "총개수 - 인덱스 - (현재 페이지 번호 - 1) * 페이지당 개수" -->
 						<td>${totalcount - status.index - ((pageNum - 1) * pageRow)}</td>
 						<td><a href="/pp/portfolio/notice/view.do?no=${list.no}">${list.title }</a></td>
-						<td></td>
+						<td>${list.writer }</td>
 						<td>${list.regdate }</td>
 						<td>${list.viewcount}</td>
 					</tr>

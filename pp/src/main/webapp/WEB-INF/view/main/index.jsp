@@ -129,12 +129,18 @@ function goContainer() {
 			<div class="main">
 				<div class="wid48 fl_l">
 					<div class="box notice">
-						<h2>공지사항</h2>
-						<ul>
-							<li style="text-align:center;">등록된 공지사항이 없습니다.</li>
-							<li><a href="javascript:;" onclick="parent.clickMenu('portfolio1', '공지사항', '/board/notice/view.do?idx=');">
-								제목<span>조회수</span></a></li>
-						</ul>
+						<h2>공지사항(인기글)</h2>
+							<ul>
+							<c:if test="${empty noticelist}">
+								<li style="text-align:center;">등록된 공지사항이 없습니다.</li>
+							</c:if>
+							<c:if test="${!empty noticelist}">
+								<c:forEach items="${noticelist}" var="list">
+								<li><a href="javascript:;" onclick="parent.clickMenu('portfolio1', '공지사항', '/portfolio/notice/view.do?no=${list.no}');">
+									${list.title }<span>${list.regdate}</span></a></li>
+								</c:forEach>
+							</c:if>
+							</ul>
 					</div>
 					<div class="box notice">
 						<h2>Q&A(인기글)</h2>
@@ -247,7 +253,9 @@ function goContainer() {
 						<table id="member_tab" style="display:none;">
 							<thead>
 								<c:if test="${empty memberlist }">
-									<li style="text-align:center;">3일 이내 가입한 회원이 없습니다.</li>							
+								<tr>
+									<td colspan="3" style="text-align:center;">3일 이내 가입한 회원이 없습니다.</td>
+								</tr>							
 								</c:if>
 								<c:if test="${!empty memberlist }">
 									<tr>

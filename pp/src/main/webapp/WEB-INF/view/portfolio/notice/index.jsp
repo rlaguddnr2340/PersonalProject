@@ -14,7 +14,9 @@
 	<div class="pageTitle">
 		<h2>공지사항</h2>
 		<div align="right">
-			<a href ="/pp/portfolio/notice/write.do"><button class="btn">글작성</button></a>
+			<c:if test="${loginInfo.authority eq 'ROLE_ADMIN'}">
+				<a href ="/pp/portfolio/notice/write.do"><button class="btn">글작성</button></a>
+			</c:if>
 		</div>
 	</div>
 	<!--//pageTitle-->

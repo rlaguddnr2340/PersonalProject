@@ -10,8 +10,55 @@
 </head>
 <body>
 <script>
-function goSave(){
+var check=0;
+$(function(){
+	$("#id").focusout(function(){
+		check=0;
+	})
+})
+function goSave(id){
+	if($("#id").val()==''){
+		alert("아이디를 입력하세요.");
+		$("#id").focus();
+		return false;
+	}
+	var reg_pwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+	if( !reg_pwd.test($("#password").val()) ) {
+		alert("비밀번호는 영문,숫자,특수문자 조합으로 8자 이상 입력하세요.");
+		return false;
+	}
+	
+	if(check==0){
+		alert("아이디 중복체크바랍니다.");
+		return false;
+	}
+	
 	$("#frm").submit();
+}
+
+function idcheck(){
+	if($("#id").val()==''){
+		alert("아이디를 입력하세요.");
+		$("#id").focus();
+		return false;
+	}else{
+		$.ajax({
+			url : "/pp/portfoil/member/idcheck.do",
+			async: false,
+			data : {
+				id : $("#id").val()
+			},
+			success : function(res){
+				if(res !=0){
+					alert("중복된 아이디입니다.");
+					check=0;
+				}else{
+					alert("사용 가능한 아이디입니다.");
+					check=1;
+				}
+			}
+		});
+	}
 }
 
 </script>
@@ -30,7 +77,7 @@ function goSave(){
                             <th>*ID</th>
                             <td>
                                 <input type="text" name="id" id="id" class="inNextBtn" style="float:left;">
-                                <span class="id_check"><a href="javascript:;"  class="btn bgGray" style="float:left; width:auto; clear:none;" id="idupCheckBtn">중복확인</a></span>
+                                <span class="id_check"><a href="javascript:;" onclick="idcheck();"  class="btn bgGray" style="float:left; width:auto; clear:none;" id="idupCheckBtn">중복확인</a></span>
                             </td>
                         </tr>
                         <tr>

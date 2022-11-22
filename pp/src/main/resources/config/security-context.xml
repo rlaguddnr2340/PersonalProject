@@ -16,11 +16,16 @@
 		<intercept-url pattern="/portfolio/gallery/index.do" access="permitAll" />
 		<intercept-url pattern="/portfolio/reply/index.do" access="permitAll" />
 		<intercept-url pattern="/portfolio/comment/index.do" access="permitAll" />
+		<intercept-url pattern="/portfolio/notice/index.do" access="permitAll" />
+		<intercept-url pattern="/portfolio/member/login.do" access="permitAll" />
 		
 		<intercept-url pattern="/portfolio/gallery/**" access="hasAnyRole('USER','ADMIN')" />
 		<intercept-url pattern="/portfolio/reply/**" access="hasAnyRole('USER','ADMIN')" />
 		<intercept-url pattern="/portfolio/comment/**" access="hasAnyRole('USER','ADMIN')" />
-		<intercept-url pattern="/portfolio/member/memberlist.do" access="hasAnyRole('ADMIN')" />
+		<intercept-url pattern="/portfolio/notice/view.do" access="hasAnyRole('USER','ADMIN')"/>
+		<intercept-url pattern="/portfolio/notice/**" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/portfolio/member/index.do" access="hasRole('ADMIN')" />
+		
 		
 		<csrf disabled="true"/>
 		<form-login
@@ -37,7 +42,11 @@
 			error-page="/portfolio/member/error.do"
 		/>
 	</http>
-		
+
+<!-- <intercept-url pattern="/portfolio/notice/write.do" access="hasAnyRole('ADMIN')" />
+		<intercept-url pattern="/portfolio/notice/**" access="hasAnyRole('USER','ADMIN')" /> -->		
+
+
 	<authentication-manager>
 	  <authentication-provider user-service-ref="loginService"/>
 	</authentication-manager>

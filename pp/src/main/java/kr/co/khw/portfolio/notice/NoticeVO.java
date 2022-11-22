@@ -10,7 +10,7 @@ public class NoticeVO {
 	private String content;
 	private String regdate;
 	private int viewcount;
-	private int memberno;
+	private String writer;
 	private String filename_org;
 	private String filename_real;
 }

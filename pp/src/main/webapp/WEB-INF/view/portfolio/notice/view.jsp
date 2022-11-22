@@ -4,6 +4,7 @@
 <head>
 <title><%=util.Property.title %></title>
 <%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 
 function goEdit(no) {
@@ -67,7 +68,7 @@ function goDelete(no){
 					</td>
 					<th>작성자</th>
 					<td>
-						아직 회원 연동 안해서 안나옴
+						${data.writer}
 					</td>
 				</tr>
 				<tr>
@@ -86,12 +87,13 @@ function goDelete(no){
 		</table>
 		</form>
 		<div class="btnSet">
-			<div class="left">
-				<a href="javascript:;" class="btn" onclick="location.href='index.do';">목록</a>
-			</div>
+				
 			<div class="right">
-				<a href="javascript:;" class="btn" onclick="goEdit(${param.no});">수정</a>
-				<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				<a href="javascript:;" class="btn" onclick="location.href='index.do';">목록</a>
+				<c:if test="${loginInfo.authority eq 'ROLE_ADMIN'}">
+					<a href="javascript:;" class="btn" onclick="goEdit(${param.no});">수정</a>
+					<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				</c:if>
 			</div>
 		</div>
 		<div style="height:300px;"></div>

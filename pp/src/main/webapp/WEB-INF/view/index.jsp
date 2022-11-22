@@ -358,7 +358,7 @@ $(function(){
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio2', '책소개', '/portfolio/gallery/index.do', false)">책소개</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio4', 'Q&A', '/portfolio/reply/index.do', false)">Q&A</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio5', '자유게시판', '/portfolio/comment/index.do', false)">자유게시판</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/memberlist.do', false)">회원관리</a></dd>
+						<dd><a href="javascript:;" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</a></dd>
 					</dl>
 				</div>
 			</div>
@@ -425,7 +425,7 @@ $(function(){
 							<li id="portfolio2_submenu" onclick="clickMenu('portfolio2', '책소개', '/portfolio/gallery/index.do', false)">책소개</li>
 							<li id="portfolio4_submenu" onclick="clickMenu('portfolio4', 'Q&A', '/portfolio/reply/index.do', false)">Q&A</li>
 							<li id="portfolio5_submenu" onclick="clickMenu('portfolio5', '자유게시판', '/portfolio/comment/index.do', false)">자유게시판</li>
-							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/memberlist.do', false)">회원관리</li>
+							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</li>
 						</ul>
 					</dd>
 				</dl>

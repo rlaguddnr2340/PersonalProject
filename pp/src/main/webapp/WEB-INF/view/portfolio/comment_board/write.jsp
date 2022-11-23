@@ -37,7 +37,7 @@ function goSave() {
 	<!--//search-->
 	<div class="write">
 		<form name="frm" id="frm" action="/pp/portfolio/comment/writeproc.do" method="POST" enctype="multipart/form-data">
-		<input type="hidden" id="writer" name="writer" value="${loginInfo.name }"> 
+		<input type="hidden" id="writer" name="writer" value="${loginInfo.id }"> 
 		<table>
 			<colgroup>
 				<col style="width:150px"/>

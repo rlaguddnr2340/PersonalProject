@@ -8,6 +8,15 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+$(function(){
+	var the_height=
+		parent.document.getElementById("portfolio5_ifrm").contentWindow.
+		document.body.scrollHeight;
+	parent.document.getElementById("portfolio5_ifrm").height=
+		the_height+600;
+	comment(1);
+})
+
 
 function goEdit(boardno,pageNum) {
 	if (confirm("수정하시겠습니까?")) {
@@ -22,7 +31,6 @@ function goDelete(no){
 			data : {"no" : no},
 			type : 'get',
 			success :function(res){
-				console.log(res)
 				if(res==1){
 					alert("삭제완료");
 					  location.href = "/pp/portfolio/notice/index.do";
@@ -40,7 +48,7 @@ function replywrite(){
 		data : {
 			content : $('#replycontent').val(),
 			boardno : ${data.boardno},
-			writer : "${loginInfo.name}"
+			writer : "${loginInfo.id}"
 		},
 		type : "post",
 		success: function(res){
@@ -56,6 +64,47 @@ function replywrite(){
 		
 	});
 }
+
+
+function replydelete(no){
+	$.ajax({
+		url : "/pp/portfolio/comment/replydelete",
+		type: "post",
+		data : {
+			no : no
+		},
+		success : function(res){
+			if(res ==1){
+				alert("삭제가 완료되었습니다.");
+				comment(1);
+			}
+		}
+	})
+}
+
+function replyedit(no){
+	$(".replycontent"+no).val('');
+	$(".replycontent"+no).removeAttr("readonly style")
+	$(".replycontent"+no).focus();	
+	$("input[name=edit"+no+"]").show();
+} 
+
+function replyeditproc(no,i){
+	$.ajax({
+		url : "/pp/portfolio/comment/replyedit",
+		type: "post",
+		data : {
+			no : no,
+			content : $(".replycontent"+i).val()
+		},
+		success : function(res){
+			if(res.no > 0){
+				alert("수정이 완료되었습니다.");
+				comment(1);
+			}
+		}
+	})
+}	
 
 function comment(no){
 	$.ajax({
@@ -73,22 +122,30 @@ function comment(no){
 			html+="<class='btn1' onclick='comment(1)' style='float: right'><img src='/pp/img/refresh.png'>";				
 			html+="</h4><br><hr>";
 			for(var i=0; i<res.content.length; i++){
-				html += "<div>" +res.content[i].writer+ "</div>";
-				html += "<div>" +res.content[i].regdate+"</div>";
-				html += "<div>" +res.content[i].content+ "</div>";
+				html += res.content[i].writer;
+				html += "<div>";
+				html += 	"<input type='text'style='border: none; outline: none;' readonly='readonly' value="+res.content[i].regdate+">";
+				html += "</div>";
+				html += "<div>";
+				html += 	"<input type='text' class='replycontent"+i+"' style='border: none; outline: none;' readonly='readonly' value='"+res.content[i].content+"'>";
+				if(res.content[i].writer == "${loginInfo.id}"){
+					html += 	"<input type='button' class='btn' style='float: right;' onclick='replydelete("+res.content[i].no+")'; value='삭제'>";
+					html += 	"<input type='button' class='btn' style='float: right;' onclick='replyedit("+i+")'; value='수정'>";
+					html +=		"<input type='button' name='edit"+i+"' class='btn' style='display:none'; onclick='replyeditproc("+res.content[i].no+"," +i+")'; value='변경'>"
+					html += "</div>";
+				}else{
+					html +=		"<input type='button' name='edit"+i+"' class='btn' style='display: none'; onclick='' value='변경'>"
+					html += "</div>";
+				}
 				html += "<hr><br>";
 			};
 			var endpage = Math.ceil((res.number+1)/10)*10;
 			var startpage = endpage - 9;
 			if(endpage >= res.totalPages){
 				endpage = res.totalPages;
-				console.log("1:"+endpage);
 			}else{
 				endpage = (startpage+9);
-				console.log("2:"+endpage);
 			}
-			console.log("3:"+startpage);
-			console.log("4:"+endpage);
 			html+= " <div class='pagenate clear'> ";
 			html+= "<ul class='paging'>";
 			if((startpage-9) > 1){
@@ -111,9 +168,7 @@ function comment(no){
 		}
 	});
 }
-$(function(){
-	comment(1);
-})
+
 </script>
 </head>
 <body>
@@ -176,15 +231,17 @@ $(function(){
 		<div class="btnSet">
 			<div class="right">
 				<a href="javascript:;" class="btn" onclick="location.href='index.do?pagenum=${param.pagenum}&stype=${param.stype}&sword=${param.sword }';">목록</a>
-				<a href="javascript:;" class="btn" onclick="goEdit(${param.boardno},${param.pagenum});">수정</a>
-				<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				<c:if test="${loginInfo.id eq data.writer }">
+					<a href="javascript:;" class="btn" onclick="goEdit(${param.boardno},${param.pagenum});">수정</a>
+					<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				</c:if>
 			</div>
 		</div>
 		<div style="height:300px;">
 			<hr>
 			<h2>댓글 작성</h2>
 			<hr><br>
-			<textarea id='replycontent' rows='4' cols='128'></textarea>
+			<textarea id='replycontent' rows='4' cols='128' style="width: 1270px"></textarea>
 			<a href='javascript:;' class='btn' onclick='replywrite();'>작성</a><br>
 			<br><hr><h4>댓글</h4>
 			

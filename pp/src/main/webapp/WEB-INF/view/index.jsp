@@ -22,7 +22,7 @@ function calcHeight(id){
 	
 	//change the height of the iframe
 	document.getElementById(id).height=
-	the_height+1500;
+	the_height+100;
 	//document.getElementById('the_iframe').scrolling = "no";
 	document.getElementById(id).style.overflow = "hidden";
 }
@@ -340,26 +340,24 @@ $(function(){
 						<dd class="frist"><a href="javascript:;" onclick="clickMenu('myinfo1', '프로필', '/myinfo/index.do', false)">프로필</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('myinfo2', '자기소개', '/myinfo/myinfo.do', false)">자기소개</a></dd>
 					</dl>
-					<dl style="width:13.666%;">
-						<dt><a href="javascript:;">팀프로젝트</a></dt>
-						<dd class="frist"><a href="javascript:;" onclick="clickMenu('project1', '프로젝트 소개', '/project/index.do', false)">프로젝트 소개</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('project2', '프로젝트 기획', '/project/plan.do', false)">프로젝트 기획</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('project3', '프로젝트 설계', '/project/architecture.do', false)">프로젝트 설계</a></dd>
-					</dl>
 					<dl style="width:16.666%;">
-						<dt><a href="javascript:;">BigData</a></dt>
-						<dd class="frist"><a href="javascript:;" onclick="clickMenu('bigdata1', 'BigData', '/bigdata/bigdata.do', false)">BigData</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('bigdata2', 'Hadoop', '/bigdata/hadoop.do', false)">Hadoop</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('bigdata3', '데이터분석', '/bigdata/analysis.do', false)">데이터분석</a></dd>
+						<dt><a href="javascript:;">팀프로젝트</a></dt>
+						<dd class="frist"><a href="javascript:;" onclick="clickMenu('teamproject1', '둘이놀자', '/project/hotelppt.do', false)">둘이놀자(호텔서비스)</a></dd>
 					</dl>
 					<dl style="width:15.666%;">
-						<dt><a href="javascript:;">개인 프로젝트</a></dt>
+						<dt><a href="javascript:;">개인프로젝트</a></dt>
 						<dd class="frist"><a href="javascript:;" onclick="clickMenu('portfolio1', '공지사항', '/portfolio/notice/index.do', false)">공지사항</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio2', '책소개', '/portfolio/gallery/index.do', false)">책소개</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio4', 'Q&A', '/portfolio/reply/index.do', false)">Q&A</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio5', '자유게시판', '/portfolio/comment/index.do', false)">자유게시판</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</a></dd>
 					</dl>
+					<dl style="width:13.666%;">
+						<dt><a href="javascript:;">보안프로젝트</a></dt>
+						<dd class="frist"><a href="javascript:;" onclick="clickMenu('project1', '보안 프로젝트', '/project/securityppt.do', false)">취약점보안솔루션</a></dd>
+					</dl>
+					
+					
 				</div>
 			</div>
 			
@@ -379,7 +377,7 @@ $(function(){
 				
 				<c:if test="${!empty loginInfo}">
 						<fieldset>
-							${loginInfo.name}님 환영합니다.
+							${loginInfo.id}님 환영합니다.
 						</fieldset>
 						<ul >
 							<li class="homepage"><a href="/pp/portfolio/member/logout.do">로그아웃</a></li>
@@ -402,20 +400,10 @@ $(function(){
 							<li id="myinfo2_submenu" onclick="clickMenu('myinfo2', '자기소개', '/myinfo/myinfo.do', false)">자기소개</li>
 						</ul>
 					</dd>
-					<dt id="project" class="gnb_menu">팀프로젝트</dt>
+					<dt id="teamproject" class="gnb_menu">팀프로젝트</dt>
 					<dd class="gnb_submenu">
 						<ul>	
-							<li id="project1_submenu" onclick="clickMenu('project1', '프로젝트 소개', '/project/index.do', false)">프로젝트 소개</li>
-							<li id="project2_submenu" onclick="clickMenu('project2', '프로젝트 기획', '/project/plan.do', false)">프로젝트 기획</li>
-							<li id="project3_submenu" onclick="clickMenu('project3', '프로젝트 설계', '/project/architecture.do', false)">프로젝트 설계</li>
-						</ul>
-					</dd>
-					<dt id="bigdata" class="gnb_menu">BigData</dt>
-					<dd class="gnb_submenu">
-						<ul>	
-							<li id="bigdata1_submenu" onclick="clickMenu('bigdata1', 'BigData', '/bigdata/bigdata.do', false)">BigData</li>
-							<li id="bigdata2_submenu" onclick="clickMenu('bigdata2', 'Hadoop', '/bigdata/hadoop.do', false)">Hadoop</li>
-							<li id="bigdata3_submenu" onclick="clickMenu('bigdata3', '데이터분석', '/bigdata/analysis.do', false)">데이터분석</li>
+							<li id="teamproject1_submenu" onclick="clickMenu('teamproject1', '둘이놀자', '/project/hotelppt.do', false)">둘이놀자(호텔시스템)</li>
 						</ul>
 					</dd>
 					<dt id="portfolio" class="gnb_menu">개인 프로젝트</dt>
@@ -428,6 +416,14 @@ $(function(){
 							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</li>
 						</ul>
 					</dd>
+					<dt id="project" class="gnb_menu">보안 프로젝트</dt>
+					<dd class="gnb_submenu">
+						<ul>	
+							<li id="project1_submenu" onclick="clickMenu('project1', '보안 프로젝트', '/project/securityppt.do', false)">취약점보안솔루션</li>
+						</ul>
+					</dd>
+					
+					
 				</dl>
 			</div>
 			<div class="menuclose" onclick="menuToggle();"><img src="<%=util.Property.contextPath%>/img/menu_close.png" /></div>

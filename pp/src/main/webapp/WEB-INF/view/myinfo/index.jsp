@@ -22,57 +22,68 @@
 			<tbody>
 				<tr>
 					<th>이름</th>
-					<td>홍길동</td>
+					<td>김형욱</td>
 					<th>나이</th>
-					<td>
-						30세
-					</td>
+					<td>27세</td>
 				</tr>
 				<tr>
-					<th>연락처</th>
-					<td>
-					</td>
+					<th>전화번호</th>
+					<td>010-7724-2340</td>
 					<th>이메일</th>
-					<td>
-					</td>
+					<td>rlaguddnr2340@naver.com</td>
 				</tr>
 				<tr>
 					<th>주소</th>
 					<td colspan="3">
-						서울시 금천구 가산디지털2로 115 811호
+						인천광역시 부평구 주부토로 262번길 19-36
 					</td>
 				</tr>
 				<tr>
-					<th rowspan="2">학력</th>
+					<th rowspan="3">학력</th>
 					<td colspan="3">
-						00 고등학교
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						00 대학교 00 과
-					</td>
-				</tr>
-				<tr>
-					<th rowspan="2">이력</th>
-					<td colspan="3">
-						00 회사 00 팀 (1년 6개월) - 00업무
+						작전 고등학교
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3">
-						00 회사 00 팀 (1년 6개월) - 00업무
-					</td>
-				</tr>
-				<tr>
-					<th rowspan="2">자격증</th>
-					<td colspan="3">
-						정보처리기사
+						명지전문대학교 전자과(컴퓨터 전자과)
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3">
-						SQLD
+						학점은행제 정보통신학과
+					</td>
+				</tr>
+				<tr>
+					<th >이력</th>
+					<td colspan="3">
+						이글루코퍼레이션 보안관제팀 (9개월) - 보안 이벤트 탐지 및 처리, 개인정보 유출 방지
+					</td>
+				</tr>
+				<tr>
+					<th rowspan="5">자격증</th>
+					<td colspan="3">
+						정보처리기사(최종합격)
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						SQL개발자(SQLD자격)
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						정보보안기사(필기합격)
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						네트워크관리자 2급
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						리눅스마스터 2급
 					</td>
 				</tr>
 			</tbody>

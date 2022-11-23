@@ -80,8 +80,10 @@ function goDelete(no) {
 		<div class="btnSet">
 			<div class="right">
 				<a href="index.do?pageNum=${pageinfo.pageNum}" class="btn" >목록</a>
-				<a href="javascript:;" class="btn" onclick="goEdit(${param.pageNum },${param.no});">수정</a>
-				<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				<c:if test="${loginInfo.id eq data.writer}">
+					<a href="javascript:;" class="btn" onclick="goEdit(${param.pageNum },${param.no});">수정</a>
+					<a href="javascript:;" class="btn" onclick="goDelete(${param.no});">삭제</a>
+				</c:if>
 				<c:if test="${loginInfo.authority eq 'ROLE_ADMIN' }">
 					<a href="javascript:;" class="btn" onclick="goReply(${param.no});">답변작성</a>
 				</c:if>

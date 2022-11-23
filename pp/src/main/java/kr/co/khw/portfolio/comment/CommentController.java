@@ -205,11 +205,30 @@ public class CommentController {
 		return commentrep.save(vo);
 	}
 	
+	//댓글 작성
+	@PostMapping("portfolio/comment/replyedit")
+	@ResponseBody
+	public CommentVO replyedit(CommentVO vo) {
+		String newcontent=vo.getContent();
+		vo = commentrep.findByNo(vo.getNo());
+		vo.setContent(newcontent);
+		return commentrep.save(vo);
+	}
+	
+	//댓글 삭제
+	@PostMapping("portfolio/comment/replydelete")
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	@ResponseBody
+	public int replydelete(CommentVO vo) {
+		return commentrep.deleteByNo(vo.getNo());
+	}
+
+	
 	//댓글 리스트
 	@GetMapping("portfolio/comment/commentlist")
 	@ResponseBody
 	public Page<CommentVO> commentlist(Model model,CommentVO vo,@RequestParam(value = "pagenum", required = false, defaultValue = "1") int pagenum){
-		Pageable pageable = PageRequest.of(pagenum-1,10,Sort.Direction.DESC, "regdate");
+		Pageable pageable = PageRequest.of(pagenum-1,5,Sort.Direction.DESC, "regdate");
 		Page<CommentVO> newpaging = commentrep.findAllByBoardnoAndTabletype(vo.getBoardno(),"commentboard",pageable);
 		System.out.println("TotalPages"+newpaging.getTotalPages());
 		return newpaging;

@@ -83,5 +83,16 @@ public class MainController {
 	public String myinfo() {
 		return "myinfo/myinfo";
 	}
+	
+	@RequestMapping("/project/securityppt.do")
+	public String securityppt() {
+		return "project/securityppt";
+	}
+
+	@RequestMapping("/project/hotelppt.do")
+	public String hotelppt() {
+		return "project/hotelppt";
+	}
+	
 }
 

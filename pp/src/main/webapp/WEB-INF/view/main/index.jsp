@@ -160,9 +160,8 @@ function goContainer() {
 					</div>
 					<div class="linkBox">
 						<ul>
-							<li class="link01"><a href="">Profile</a></li>
-							<li class="link02"><a href="">Java</a></li>
-							<li class="link03"><a href="">BigData</a></li>
+							<li class="link01"><a href=""onclick="parent.clickMenu('teamproject1', '둘이놀자', '/project/hotelppt.do', false)">팀프로젝트</a></li>
+							<li class="link03"><a href="" onclick="parent.clickMenu('project1', '보안 프로젝트', '/project/securityppt.do', false)">보안프로젝트</a></li>
 						</ul>
 					</div>
 				</div>

@@ -38,7 +38,7 @@ function goSave() {
 	<div class="write">
 		<form name="frm" id="frm" action="writeproc.do" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="cmd" value="write">
-		<input type="hidden" name="writer" value="${loginInfo.name }">
+		<input type="hidden" name="writer" value="${loginInfo.id }">
 		<table>
 			<colgroup>
 				<col style="width:150px"/>

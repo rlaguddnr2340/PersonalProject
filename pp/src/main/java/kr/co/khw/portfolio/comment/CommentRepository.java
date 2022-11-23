@@ -14,5 +14,9 @@ public interface CommentRepository extends JpaRepository<CommentVO, Integer> {
 
 	List<CommentVO> findAllByBoardnoAndTabletype(int boardno, String string);
 
+	CommentVO findByNo(int no);
+
+	int deleteByNo(int no);
+
 	
 }

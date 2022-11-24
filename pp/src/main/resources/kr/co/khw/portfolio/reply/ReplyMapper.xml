@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khw.portfolio.reply.ReplyMapper">
+
+	<!-- 목록가져오기 -->
+	<select id="list" parameterType="util.PageInfo" resultType="kr.co.khw.portfolio.reply.ReplyVO">
+		select * from reply
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype !='all'">
+					${stype} LIKE '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					title LIKE '%${sword}%' or content LIKE '%${sword}%'
+				</if>
+			</if>
+		</where>
+		order by gno desc, ono asc
+		LIMIT #{startIdx} , #{pageRow}
+	</select>
+	
+	<!-- 메인페이지 목록 가져오기(조회수순) -->
+	<select id="qnalist"  resultType="kr.co.khw.portfolio.reply.ReplyVO">
+		select * from reply where delete_status !=1 order by viewcount desc
+		LIMIT 0 , 5;
+	</select>
+	
+	
+	<!-- 총 개수 구하기 -->
+	<select id="totalcount" parameterType="util.PageInfo" resultType="int">
+		select count(*) from reply
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype !='all'">
+					${stype} LIKE '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					title LIKE '%${sword}%' or content LIKE '%${sword}%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 글 상세보기 -->
+	<select id="view" parameterType="kr.co.khw.portfolio.reply.ReplyVO" resultType="kr.co.khw.portfolio.reply.ReplyVO">
+		select * from reply where no=#{no}
+	</select>
+	
+	<!-- 글 상세 이미지 가져오기 -->
+	<select id="selectimage" parameterType="kr.co.khw.portfolio.reply.ReplyVO" resultType="kr.co.khw.portfolio.reply.ReplyVO">
+		select filename_real, filename_org from reply r join image i on i.boardno = r.no where r.no=#{no} and i.type="reply"
+	</select>
+	
+	<!-- 글 작성 -->
+	<insert id="write" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		insert into reply (title, content, regdate, viewcount, writer, gno, ono, nested)
+		values (#{title}, #{content}, now(), #{viewcount}, #{writer}, #{gno}, #{ono}, #{nested})
+		<selectKey resultType="int" keyProperty="no" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="insertgno" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set gno = #{no} where no=#{no}
+	</update>
+	
+	<insert id="imginsert" parameterType="kr.co.khw.image.ImageVO">
+		insert into  image (boardno, filename_real, filename_org, order_num, type, delete_status)
+		values (#{boardno}, #{filename_real}, #{filename_org}, #{order_num}, #{type}, #{delete_status})
+	</insert>
+	
+	<update id="updateviewcount" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set viewcount = #{viewcount}+1 where no = #{no}
+	</update>
+	
+	<update id="edit" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set title =#{title}, content=#{content} where no=#{no}
+	</update>
+	
+	
+	<update id="delete" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set delete_status=1 where no=#{no}
+	</update>
+	
+	<delete id="deleteimage" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		delete from image where boardno=#{no} and type="reply"
+	</delete>
+	
+	
+	
+	<!-- 답변처리 -->
+	
+	<update id="updategno" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set gno = #{gno} where no=#{no}
+	</update>
+	
+	<update id="reviesono" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set ono = ono+1 where ono > #{ono}
+	</update>
+	
+	<update id="updateono" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set ono = ono+1 where no=#{no}
+	</update>
+	
+	<update id="updatenested" parameterType="kr.co.khw.portfolio.reply.ReplyVO">
+		update reply set nested = nested+1 where no=#{no}
+	</update>
+	
+</mapper>

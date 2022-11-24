@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khw.portfolio.member.MemberMapper">
+	<select id="LoginInfo" parameterType="string" resultType="kr.co.khw.portfolio.member.MemberVO" >
+		select * from member where id = #{id}
+	</select>
+
+	<insert id="Join" parameterType="kr.co.khw.portfolio.member.MemberVO">
+		insert into member (id, name, password, hp, birthday)
+		values (#{id}, #{name}, #{password}, #{hp}, #{birthday})
+	</insert>
+	
+	<select id="memberlist" resultType="kr.co.khw.portfolio.member.MemberVO">
+		select * from member where DATEDIFF(now(),regdate)<![CDATA[<]]> 4 order by regdate desc limit 0,5
+	</select>
+	
+	<select id="idcheck" parameterType="string" resultType="int">
+		select count(*) from member where id = #{id} 
+	</select>
+	
+	<select id="totalcount" parameterType="util.PageInfo" resultType="int">
+		select count(*) from member
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype !='all'">
+					${stype} LIKE '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					name LIKE '%${sword}%' or id LIKE '%${sword}%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 목록가져오기 -->
+	<select id="list" parameterType="util.PageInfo" resultType="kr.co.khw.portfolio.member.MemberVO">
+		select * from member
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype !='all'">
+					${stype} LIKE '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					name LIKE '%${sword}%' or id LIKE '%${sword}%'
+				</if>
+			</if>
+		</where>
+		order by regdate desc
+		LIMIT #{startIdx} , #{pageRow}
+	</select>
+	
+	
+</mapper>

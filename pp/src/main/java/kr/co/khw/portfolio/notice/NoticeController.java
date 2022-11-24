@@ -26,7 +26,7 @@ public class NoticeController {
 	public String portfolionoticemain(ResponseVO vo, Model model, @RequestParam Map map) throws Exception {
 		
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/index.do";
+		String url = "http://43.200.76.254:8081/board/index.do";
 		if (map.get("pageNum") != null) map.put("pageNum",map.get("pageNum"));
 		if (map.get("sword") != null) map.put("sword",map.get("sword"));
 		if (map.get("stype") != null) map.put("stype",map.get("stype"));
@@ -67,7 +67,7 @@ public class NoticeController {
 			map.put("filename", file);
 		}
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/write.do";
+		String url = "http://43.200.76.254:8081/board/write.do";
 		
 		String resultapi = apicall.ApiCall(url, map, "Multipart");
 		return "redirect:/portfolio/notice/index.do";
@@ -77,7 +77,7 @@ public class NoticeController {
 	@GetMapping("portfolio/notice/view.do")
 	public String view(@RequestParam Map map, Model model) throws Exception{
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/view.do";
+		String url = "http://43.200.76.254:8081/board/view.do";
 		
 		String resultapi = apicall.ApiCall(url, map, "GET");
 		System.out.println(resultapi);
@@ -96,7 +96,7 @@ public class NoticeController {
 	@ResponseBody
 	public int delete(@RequestParam Map map, Model model) throws Exception{
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/delete.do";
+		String url = "http://43.200.76.254:8081/board/delete.do";
 		String resultapi = apicall.ApiCall(url, map, "GET");
 		ObjectMapper om = new ObjectMapper();
 		map = om.readValue(resultapi, Map.class);
@@ -110,7 +110,7 @@ public class NoticeController {
 	@GetMapping("portfolio/notice/edit.do")
 		public String edit(@RequestParam Map map, Model model) throws Exception{
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/view.do";
+		String url = "http://43.200.76.254:8081/board/view.do";
 		
 		String resultapi = apicall.ApiCall(url, map, "GET");
 		System.out.println(resultapi);
@@ -129,7 +129,7 @@ public class NoticeController {
 		ApiCall apicall = new ApiCall();
 		System.out.println(map.keySet());
 		System.out.println(map.get("check"));
-		String url ="http://localhost:8080/board/edit.do";
+		String url ="http://43.200.76.254:8081/board/edit.do";
 		
 		if(!filename.isEmpty()) {
 			//multipartFile 객체 -> file 객체

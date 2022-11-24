@@ -168,7 +168,7 @@ public class CommentController {
 
 	// 댓글게시판 글쓰기(이미지 저장 완료)
 	@PostMapping("portfolio/comment/writeproc.do")
-	public CommentBoard writepro(@RequestParam List<MultipartFile> filename, HttpServletRequest req, CommentBoard vo,
+	public String writepro(@RequestParam List<MultipartFile> filename, HttpServletRequest req, CommentBoard vo,
 			Model model) {
 
 		List<Image> list = new ArrayList<Image>();
@@ -194,7 +194,7 @@ public class CommentController {
 				imagerep.save(imagevo);
 			}
 		}
-		return vo;
+		return "portfolio/comment_board/index";
 	}
 	
 	//댓글 작성

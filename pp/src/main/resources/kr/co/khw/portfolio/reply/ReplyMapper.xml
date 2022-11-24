@@ -48,7 +48,7 @@
 	
 	<!-- 글 상세 이미지 가져오기 -->
 	<select id="selectimage" parameterType="kr.co.khw.portfolio.reply.ReplyVO" resultType="kr.co.khw.portfolio.reply.ReplyVO">
-		select filename_org from reply r join image i on i.boardno = r.no where r.no=#{no} and i.type="reply"
+		select filename_real, filename_org from reply r join image i on i.boardno = r.no where r.no=#{no} and i.type="reply"
 	</select>
 	
 	<!-- 글 작성 -->

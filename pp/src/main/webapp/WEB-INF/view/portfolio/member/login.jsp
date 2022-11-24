@@ -11,7 +11,7 @@
 <body>
 <script>
 $(function(){
-	if(${refer == "http://localhost:8081/pp/index.do"}){
+	if(${refer == "http://43.200.76.254:8080/pp/index.do"}){
 		alert("로그인후 이용가능합니다.");
 		parent.delTabCur();
 	}

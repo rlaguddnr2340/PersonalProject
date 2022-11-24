@@ -12,7 +12,7 @@
 $(function(){
 
 	//if문 추가 (refer == index.do 면 iframe닫기)
-	if(${refer == "http://localhost:8081/pp/index.do"}){
+	if(${refer == "http://43.200.76.254:8080/pp/index.do"}){
 		console.log(${refer == "http://localhost:8081/pp/index.do"});
 		alert("관리자만 접근 가능합니다.");
 		parent.delTabCur();

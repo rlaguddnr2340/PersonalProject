@@ -80,9 +80,9 @@
  			var contentImage="";
  			$.each(res, function(i, e){
  				if(e["order_num"]==0){
- 					profileImage = e["filename_org"];
+ 					profileImage = e["filename_real"];
  				}else{
- 					contentImage = e["filename_org"];
+ 					contentImage = e["filename_real"];
  				}
  			})
  			$(".lightbox-img").attr({"src":'/pp/upload/'+contentImage,"style": "width:600px;"});
@@ -367,7 +367,7 @@
 	    		<div class="paper" onclick="showLightbox(${list.no});">
 		            <div class="paper-holder">
 		            	<% double random = Math.floor(Math.random()*150)+30; %>
-		                <a><img width="<%=random %>" src="/pp/upload/${list.filename_org }"></a>
+		                <a><img width="<%=random %>" src="/pp/upload/${list.filename_real }"></a>
 		            </div>
 		            <p class="paper-description">${list.title}</p>
 		            

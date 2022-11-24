@@ -62,7 +62,7 @@ public class MainController {
 		model.addAttribute("memberlist", mapper.memberlist());
 		
 		ApiCall apicall = new ApiCall();
-		String url = "http://localhost:8080/board/noticeindex.do";
+		String url = "http://43.200.76.254:8081/board/noticeindex.do";
 		String result = apicall.ApiCall(url, map, "GET");
 		
 		ObjectMapper om = new ObjectMapper();
